@@ -1,20 +1,13 @@
 import React from "react";
 import Input from "./Input";
 import { reduxForm, Field } from "redux-form";
+import { required } from 'redux-form-validators';
 
 const renderInput = ({ input, meta }) => (
   <Input {...input} type='text' errorMessage={meta.touched && meta.error} />
 );
 
 const onSubmit = values => alert(JSON.stringify(values));
-
-const required = input => {
-  if (!input || input === "") {
-    return "This field is required";
-  }
-
-  return undefined;
-};
 
 const allowedNames = input => {
   if (input === "forbidden name") {
@@ -31,7 +24,7 @@ const ReduxForm = ({ handleSubmit, valid }) => (
       <Field
         name='customer-id'
         component={renderInput}
-        validate={[required, allowedNames]}
+        validate={[required({ message: "This field is required"}), allowedNames]}
       />
       <button type='submit'>Submit</button>
     </form>
